@@ -1,0 +1,225 @@
+.backgroundContainer {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--bg-primary) 0%,
+    var(--bg-secondary) 20%,
+    var(--bg-tertiary) 40%,
+    var(--bg-secondary) 60%,
+    var(--bg-tertiary) 80%,
+    var(--bg-primary) 100%
+  );
+  background-size: 400% 400%;
+  animation: backgroundShift 25s ease-in-out infinite;
+  transition: background 0.5s ease;
+  will-change: background-position;
+}
+
+.backgroundPattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 60%),
+    radial-gradient(circle at 10% 80%, rgba(212, 175, 55, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 90% 20%, rgba(212, 175, 55, 0.02) 0%, transparent 50%);
+  background-size: 900px 900px, 700px 700px, 1100px 1100px, 600px 600px, 800px 800px;
+  animation: patternFloat 35s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+}
+
+.backgroundOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(45deg, transparent 48%, rgba(212, 175, 55, 0.015) 49%, rgba(212, 175, 55, 0.015) 51%, transparent 52%),
+    linear-gradient(-45deg, transparent 48%, rgba(212, 175, 55, 0.015) 49%, rgba(212, 175, 55, 0.015) 51%, transparent 52%);
+  background-size: 120px 120px;
+  animation: overlayMove 30s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.8;
+  will-change: transform;
+}
+
+.contentWrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+@keyframes backgroundShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 75%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 25%;
+  }
+}
+
+@keyframes patternFloat {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(40px, -35px) rotate(90deg) scale(1.05);
+  }
+  50% {
+    transform: translate(0, 0) rotate(180deg) scale(1);
+  }
+  75% {
+    transform: translate(-30px, 25px) rotate(270deg) scale(0.95);
+  }
+}
+
+@keyframes overlayMove {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate(120px, 120px) rotate(360deg);
+  }
+}
+
+.contentWrapper::before,
+.contentWrapper::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15), transparent);
+  pointer-events: none;
+  z-index: 0;
+  animation: particleFloat 20s ease-in-out infinite;
+}
+
+.contentWrapper::before {
+  top: 20%;
+  left: 10%;
+  width: 200px;
+  height: 200px;
+  animation-delay: 0s;
+}
+
+.contentWrapper::after {
+  bottom: 30%;
+  right: 15%;
+  width: 150px;
+  height: 150px;
+  animation-delay: 5s;
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(50px, -50px) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backgroundContainer {
+    animation: none;
+    background: var(--warm-white);
+  }
+  
+  .backgroundPattern,
+  .backgroundOverlay {
+    animation: none;
+    opacity: 0.3;
+  }
+
+  .contentWrapper::before,
+  .contentWrapper::after {
+    animation: none;
+    opacity: 0.2;
+  }
+}
+
+@media (max-width: 768px) {
+  .backgroundPattern {
+    background-size: 500px 500px, 400px 400px, 600px 600px, 350px 350px, 450px 450px;
+  }
+  
+  .backgroundOverlay {
+    background-size: 80px 80px;
+    opacity: 0.6;
+  }
+  
+  .backgroundContainer {
+    animation-duration: 35s;
+  }
+  
+  .backgroundPattern {
+    animation-duration: 45s;
+  }
+  
+  .backgroundOverlay {
+    animation-duration: 40s;
+  }
+
+  .contentWrapper::before {
+    width: 150px;
+    height: 150px;
+  }
+
+  .contentWrapper::after {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .backgroundPattern {
+    background-size: 350px 350px, 280px 280px, 420px 420px, 250px 250px, 320px 320px;
+    opacity: 0.7;
+  }
+  
+  .backgroundOverlay {
+    background-size: 60px 60px;
+    opacity: 0.5;
+  }
+
+  .contentWrapper::before,
+  .contentWrapper::after {
+    display: none;
+  }
+}
+
+@media (min-width: 1920px) {
+  .backgroundPattern {
+    background-size: 1200px 1200px, 900px 900px, 1400px 1400px, 800px 800px, 1000px 1000px;
+  }
+  
+  .backgroundOverlay {
+    background-size: 150px 150px;
+  }
+
+  .contentWrapper::before {
+    width: 250px;
+    height: 250px;
+  }
+
+  .contentWrapper::after {
+    width: 200px;
+    height: 200px;
+  }
+}
